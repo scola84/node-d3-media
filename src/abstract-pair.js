@@ -21,13 +21,15 @@ export default class AbstractPair {
 
   media(query) {
     this.query = query;
-    this.count += 1;
 
-    this.matchers[query] = this.matchers[query] || {};
-    this.matchers[query] = window.matchMedia(query);
-    this.matchers[query].onchange = this._change.bind(this, query);
+    if (!this.matchers[query]) {
+      this.matchers[query] = this.matchers[query] || {};
+      this.matchers[query] = window.matchMedia(query);
+      this.matchers[query].onchange = this._change.bind(this, query);
 
-    this.values[query] = {};
+      this.values[query] = {};
+      this.count += 1;
+    }
 
     return this;
   }
@@ -35,6 +37,7 @@ export default class AbstractPair {
   set(name, value) {
     this._save(name);
     this.values[this.query][name] = value;
+
     return this;
   }
 
@@ -45,8 +48,9 @@ export default class AbstractPair {
   }
 
   _change(query) {
-    const method = this.method;
     const matcher = this.matchers[query];
+    const method = this.method;
+
     this.changed += 1;
 
     if (matcher.matches) {
@@ -86,6 +90,7 @@ export default class AbstractPair {
     }
 
     this.cache[name] = local();
+
     const cache = this.cache[name];
     const method = this.method;
 
