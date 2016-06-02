@@ -48,6 +48,7 @@ export default class AbstractSingle {
   _change(query) {
     const method = this.method;
     const matcher = this.matchers[query];
+
     this.changed += 1;
 
     if (matcher.matches) {

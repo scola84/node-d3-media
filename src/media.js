@@ -1,4 +1,7 @@
+/* eslint prefer-reflect: "off" */
+
 import Attr from './attr';
+import Call from './call';
 import Classed from './classed';
 import Html from './html';
 import Property from './property';
@@ -24,6 +27,11 @@ export default class Media {
 
   attrs(name, value) {
     this._attr().media(this.query).attrs(name, value);
+    return this;
+  }
+
+  call(...args) {
+    this._call().media(this.query).call(...args);
     return this;
   }
 
@@ -73,6 +81,11 @@ export default class Media {
   _attr() {
     this.matchers.attr = this.matchers.attr || new Attr(this.selection);
     return this.matchers.attr;
+  }
+
+  _call() {
+    this.matchers.call = this.matchers.call || new Call(this.selection);
+    return this.matchers.call;
   }
 
   _classed() {
