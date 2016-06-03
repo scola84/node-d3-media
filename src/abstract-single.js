@@ -6,16 +6,14 @@ export default class AbstractSingle {
   constructor(selection, method) {
     this.selection = selection;
     this.method = method;
+
     this.cache = local();
 
     this.query = null;
-    this.count = 0;
+    this.current = [];
 
     this.matchers = {};
     this.values = {};
-
-    this.update = null;
-    this.changed = 0;
 
     this._save();
   }
@@ -47,27 +45,29 @@ export default class AbstractSingle {
 
   _change(query) {
     const method = this.method;
-    const matcher = this.matchers[query];
 
-    this.changed += 1;
-
-    if (matcher.matches) {
-      this.update = this.values[query];
-    }
-
-    if (this.changed === this.count) {
-      if (this.update) {
-        this.selection[method](this.update);
-        this.update = null;
-      } else {
-        const cache = this.cache;
-        this.selection.each(function each() {
-          select(this)[method](cache.get(this));
-        });
+    if (this.matchers[query].matches) {
+      if (this.current.indexOf(query) > -1) {
+        return this;
       }
 
-      this.changed = 0;
+      this.current.push(query);
+    } else {
+      if (this.current.indexOf(query) === -1) {
+        return this;
+      }
+
+      this.current.splice(this.current.indexOf(query), 1);
+
+      const cache = this.cache;
+      this.selection.each(function each() {
+        select(this)[method](cache.get(this));
+      });
     }
+
+    this.current.forEach((current) => {
+      this.selection[method](this.values[current]);
+    });
 
     return this;
   }

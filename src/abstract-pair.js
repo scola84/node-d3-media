@@ -6,17 +6,14 @@ export default class AbstractPair {
   constructor(selection, method) {
     this.selection = selection;
     this.method = method;
+
     this.cache = {};
 
     this.query = null;
-    this.count = 0;
+    this.current = [];
 
     this.matchers = {};
     this.values = {};
-
-    this.update = {};
-    this.remove = [];
-    this.changed = 0;
   }
 
   media(query) {
@@ -28,7 +25,6 @@ export default class AbstractPair {
       this.matchers[query].onchange = this._change.bind(this, query);
 
       this.values[query] = {};
-      this.count += 1;
     }
 
     return this;
@@ -48,38 +44,34 @@ export default class AbstractPair {
   }
 
   _change(query) {
-    const matcher = this.matchers[query];
     const method = this.method;
 
-    this.changed += 1;
+    if (this.matchers[query].matches) {
+      if (this.current.indexOf(query) > -1) {
+        return this;
+      }
 
-    if (matcher.matches) {
-      Object.keys(this.values[query]).forEach((name) => {
-        this.update[name] = this.values[query][name];
-      });
+      this.current.push(query);
     } else {
+      if (this.current.indexOf(query) === -1) {
+        return this;
+      }
+
+      this.current.splice(this.current.indexOf(query), 1);
+
       Object.keys(this.values[query]).forEach((name) => {
-        this.remove.push(name);
-      });
-    }
-
-    if (this.changed === this.count) {
-      Object.keys(this.update).forEach((name) => {
-        this.remove.splice(this.remove.indexOf(name), 1);
-        this.selection[method](name, this.update[name]);
-      });
-
-      this.remove.forEach((name) => {
         const cache = this.cache[name];
         this.selection.each(function each() {
           select(this)[method](name, cache.get(this));
         });
       });
-
-      this.changed = null;
-      this.update = {};
-      this.remove = [];
     }
+
+    this.current.forEach((current) => {
+      Object.keys(this.values[current]).forEach((name) => {
+        this.selection[method](name, this.values[current][name]);
+      });
+    });
 
     return this;
   }
