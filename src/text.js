@@ -8,6 +8,6 @@ export default class Text extends Abstract {
   }
 
   text(value) {
-    this.set(value);
+    this._set(value);
   }
 }

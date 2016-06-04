@@ -6,6 +6,6 @@ export default class Classed extends Abstract {
   }
 
   classed(names, value) {
-    this.set(names, value);
+    this._set(names, value);
   }
 }

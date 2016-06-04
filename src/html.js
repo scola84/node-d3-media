@@ -8,6 +8,6 @@ export default class Html extends Abstract {
   }
 
   html(value) {
-    this.set(value);
+    this._set(value);
   }
 }

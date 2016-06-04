@@ -6,12 +6,12 @@ export default class Attr extends Abstract {
   }
 
   attr(name, value) {
-    this.set(name, value);
+    this._set(name, value);
   }
 
   attrs(attrs) {
     Object.keys(attrs).forEach((name) => {
-      this.set(name, attrs[name]);
+      this._set(name, attrs[name]);
     });
   }
 }

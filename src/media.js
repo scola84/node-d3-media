@@ -75,7 +75,7 @@ export default class Media {
       this.matchers[key].start();
     });
 
-    return this;
+    return this.selection;
   }
 
   _attr() {

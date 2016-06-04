@@ -6,12 +6,12 @@ export default class Style extends Abstract {
   }
 
   style(name, value) {
-    this.set(name, value);
+    this._set(name, value);
   }
 
   styles(styles) {
     Object.keys(styles).forEach((name) => {
-      this.set(name, styles[name]);
+      this._set(name, styles[name]);
     });
   }
 }

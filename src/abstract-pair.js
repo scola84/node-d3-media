@@ -7,13 +7,10 @@ export default class AbstractPair {
     this.selection = selection;
     this.method = method;
 
-    this.cache = {};
-
     this.query = null;
-    this.current = [];
-
     this.matchers = {};
     this.values = {};
+    this.cache = {};
   }
 
   media(query) {
@@ -30,36 +27,24 @@ export default class AbstractPair {
     return this;
   }
 
-  set(name, value) {
+  start() {
+    Object.keys(this.matchers).forEach((query) => {
+      this._change(query);
+    });
+  }
+
+  _set(name, value) {
     this._save(name);
     this.values[this.query][name] = value;
 
     return this;
   }
 
-  start() {
-    Object.keys(this.matchers).forEach((key) => {
-      this._change(key);
-    });
-  }
-
-  _change(query) {
+  _change(currentQuery) {
     const method = this.method;
 
-    if (this.matchers[query].matches) {
-      if (this.current.indexOf(query) > -1) {
-        return this;
-      }
-
-      this.current.push(query);
-    } else {
-      if (this.current.indexOf(query) === -1) {
-        return this;
-      }
-
-      this.current.splice(this.current.indexOf(query), 1);
-
-      Object.keys(this.values[query]).forEach((name) => {
+    if (!this.matchers[currentQuery].matches) {
+      Object.keys(this.values[currentQuery]).forEach((name) => {
         const cache = this.cache[name];
         this.selection.each(function each() {
           select(this)[method](name, cache.get(this));
@@ -67,9 +52,13 @@ export default class AbstractPair {
       });
     }
 
-    this.current.forEach((current) => {
-      Object.keys(this.values[current]).forEach((name) => {
-        this.selection[method](name, this.values[current][name]);
+    Object.keys(this.matchers).forEach((query) => {
+      if (!this.matchers[query].matches) {
+        return;
+      }
+
+      Object.keys(this.values[query]).forEach((name) => {
+        this.selection[method](name, this.values[query][name]);
       });
     });
 

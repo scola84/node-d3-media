@@ -7,13 +7,10 @@ export default class AbstractSingle {
     this.selection = selection;
     this.method = method;
 
-    this.cache = local();
-
     this.query = null;
-    this.current = [];
-
     this.matchers = {};
     this.values = {};
+    this.cache = local();
 
     this._save();
   }
@@ -27,14 +24,9 @@ export default class AbstractSingle {
       this.matchers[query].onchange = this._change.bind(this, query);
 
       this.values[query] = null;
-      this.count += 1;
     }
 
     return this;
-  }
-
-  set(value) {
-    this.values[this.query] = value;
   }
 
   start() {
@@ -43,30 +35,24 @@ export default class AbstractSingle {
     });
   }
 
-  _change(query) {
+  _set(value) {
+    this.values[this.query] = value;
+  }
+
+  _change(currentQuery) {
     const method = this.method;
 
-    if (this.matchers[query].matches) {
-      if (this.current.indexOf(query) > -1) {
-        return this;
-      }
-
-      this.current.push(query);
-    } else {
-      if (this.current.indexOf(query) === -1) {
-        return this;
-      }
-
-      this.current.splice(this.current.indexOf(query), 1);
-
+    if (!this.matchers[currentQuery].matches) {
       const cache = this.cache;
       this.selection.each(function each() {
         select(this)[method](cache.get(this));
       });
     }
 
-    this.current.forEach((current) => {
-      this.selection[method](this.values[current]);
+    Object.keys(this.matchers).forEach((query) => {
+      if (this.matchers[query].matches) {
+        this.selection[method](this.values[query]);
+      }
     });
 
     return this;

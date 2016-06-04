@@ -6,12 +6,12 @@ export default class Property extends Abstract {
   }
 
   property(name, value) {
-    this.set(name, value);
+    this._set(name, value);
   }
 
   properties(properties) {
     Object.keys(properties).forEach((name) => {
-      this.set(name, properties[name]);
+      this._set(name, properties[name]);
     });
   }
 }
