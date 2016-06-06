@@ -33,6 +33,12 @@ export default class AbstractPair {
     });
   }
 
+  destroy() {
+    Object.keys(this.matchers).forEach((query) => {
+      this.matchers[query].onchange = null;
+    });
+  }
+
   _set(name, value) {
     this._save(name);
     this.values[this.query][name] = value;

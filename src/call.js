@@ -32,6 +32,12 @@ export default class Call {
     });
   }
 
+  destroy() {
+    Object.keys(this.matchers).forEach((query) => {
+      this.matchers[query].onchange = null;
+    });
+  }
+
   _change(query) {
     if (this.matchers[query].matches) {
       this.selection.call(...this.fns[query]);

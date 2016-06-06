@@ -35,6 +35,12 @@ export default class AbstractSingle {
     });
   }
 
+  destroy() {
+    Object.keys(this.matchers).forEach((query) => {
+      this.matchers[query].onchange = null;
+    });
+  }
+
   _set(value) {
     this.values[this.query] = value;
   }

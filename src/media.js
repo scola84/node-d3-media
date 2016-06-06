@@ -75,7 +75,15 @@ export default class Media {
       this.matchers[key].start();
     });
 
-    return this.selection;
+    return this;
+  }
+
+  destroy() {
+    Object.keys(this.matchers).forEach((key) => {
+      this.matchers[key].destroy();
+    });
+
+    return this;
   }
 
   _attr() {
