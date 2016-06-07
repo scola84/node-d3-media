@@ -16,7 +16,7 @@ export default class Call {
     if (!this.matchers[query]) {
       this.matchers[query] = this.matchers[query] || {};
       this.matchers[query] = window.matchMedia(query);
-      this.matchers[query].onchange = this._change.bind(this, query);
+      this.matchers[query].addListener(this._change.bind(this, query));
     }
 
     return this;
