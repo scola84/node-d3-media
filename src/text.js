@@ -1,5 +1,3 @@
-/*eslint no-invalid-this: "off"*/
-
 import AbstractSingleModifier from './abstract-single';
 
 export default class TextModifier extends AbstractSingleModifier {
