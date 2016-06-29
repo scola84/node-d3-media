@@ -1,70 +1,43 @@
 /*eslint no-invalid-this: "off"*/
 
 import { local, select } from 'd3-selection';
+import AbstractModifier from './abstract';
 
-export default class AbstractPair {
+export default class AbstractPairModifier extends AbstractModifier {
   constructor(selection, method) {
-    this.selection = selection;
-    this.method = method;
+    super(selection, method);
 
-    this.query = null;
-    this.matchers = {};
-    this.values = {};
-    this.cache = {};
-  }
-
-  media(query) {
-    this.query = query;
-
-    if (!this.matchers[query]) {
-      this.matchers[query] = this.matchers[query] || {};
-      this.matchers[query] = window.matchMedia(query);
-      this.matchers[query].addListener(this._change.bind(this, query));
-
-      this.values[query] = {};
-    }
-
-    return this;
-  }
-
-  start() {
-    Object.keys(this.matchers).forEach((query) => {
-      this._change(query);
-    });
-  }
-
-  destroy() {
-    Object.keys(this.matchers).forEach((query) => {
-      this.matchers[query].onchange = null;
-    });
+    this._values = {};
+    this._cache = {};
   }
 
   _set(name, value) {
     this._save(name);
-    this.values[this.query][name] = value;
+    this._values[this._query] = this._values[this._query] || {};
+    this._values[this._query][name] = value;
 
     return this;
   }
 
   _change(currentQuery) {
-    const method = this.method;
+    const method = this._method;
 
-    if (!this.matchers[currentQuery].matches) {
-      Object.keys(this.values[currentQuery]).forEach((name) => {
-        const cache = this.cache[name];
-        this.selection.each(function each() {
+    if (!this._matchers[currentQuery].matches) {
+      Object.keys(this._values[currentQuery]).forEach((name) => {
+        const cache = this._cache[name];
+        this._selection.each(function each() {
           select(this)[method](name, cache.get(this));
         });
       });
     }
 
-    Object.keys(this.matchers).forEach((query) => {
-      if (!this.matchers[query].matches) {
+    Object.keys(this._matchers).forEach((query) => {
+      if (!this._matchers[query].matches) {
         return;
       }
 
-      Object.keys(this.values[query]).forEach((name) => {
-        this.selection[method](name, this.values[query][name]);
+      Object.keys(this._values[query]).forEach((name) => {
+        this._selection[method](name, this._values[query][name]);
       });
     });
 
@@ -72,16 +45,16 @@ export default class AbstractPair {
   }
 
   _save(name) {
-    if (this.cache[name]) {
+    if (this._cache[name]) {
       return;
     }
 
-    this.cache[name] = local();
+    this._cache[name] = local();
 
-    const cache = this.cache[name];
-    const method = this.method;
+    const cache = this._cache[name];
+    const method = this._method;
 
-    this.selection.each(function each() {
+    this._selection.each(function each() {
       cache.set(this, select(this)[method](name));
     });
   }

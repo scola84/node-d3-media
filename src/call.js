@@ -1,46 +1,20 @@
 /* eslint prefer-reflect: "off" */
 
-export default class Call {
+import AbstractModifier from './abstract';
+
+export default class CallModifier extends AbstractModifier {
   constructor(selection) {
-    this.selection = selection;
-
-    this.query = null;
-
-    this.matchers = {};
-    this.fns = {};
-  }
-
-  media(query) {
-    this.query = query;
-
-    if (!this.matchers[query]) {
-      this.matchers[query] = this.matchers[query] || {};
-      this.matchers[query] = window.matchMedia(query);
-      this.matchers[query].addListener(this._change.bind(this, query));
-    }
-
-    return this;
+    super(selection);
+    this._fns = {};
   }
 
   call(...args) {
-    this.fns[this.query] = args;
-  }
-
-  start() {
-    Object.keys(this.matchers).forEach((key) => {
-      this._change(key);
-    });
-  }
-
-  destroy() {
-    Object.keys(this.matchers).forEach((query) => {
-      this.matchers[query].onchange = null;
-    });
+    this._fns[this._query] = args;
   }
 
   _change(query) {
-    if (this.matchers[query].matches) {
-      this.selection.call(...this.fns[query]);
+    if (this._matchers[query].matches) {
+      this._selection.call(...this._fns[query]);
     }
   }
 }

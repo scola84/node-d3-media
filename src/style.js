@@ -1,9 +1,6 @@
-/*eslint no-invalid-this: "off"*/
+import AbstractPairModifier from './abstract-pair';
 
-import { local } from 'd3-selection';
-import Abstract from './abstract-pair';
-
-export default class Style extends Abstract {
+export default class StyleModifier extends AbstractPairModifier {
   constructor(selection) {
     super(selection, 'style');
   }
@@ -15,19 +12,6 @@ export default class Style extends Abstract {
   styles(styles) {
     Object.keys(styles).forEach((name) => {
       this._set(name, styles[name]);
-    });
-  }
-
-  _save(name) {
-    if (this.cache[name]) {
-      return;
-    }
-
-    this.cache[name] = local();
-    const cache = this.cache[name];
-
-    this.selection.each(function each() {
-      cache.set(this, this.style[name]);
     });
   }
 }

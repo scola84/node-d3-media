@@ -1,6 +1,6 @@
-import Abstract from './abstract-pair';
+import AbstractPairModifier from './abstract-pair';
 
-export default class Property extends Abstract {
+export default class PropertyModifier extends AbstractPairModifier {
   constructor(selection) {
     super(selection, 'property');
   }

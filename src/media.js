@@ -1,125 +1,129 @@
 /* eslint prefer-reflect: "off" */
 
-import Attr from './attr';
-import Call from './call';
-import Classed from './classed';
-import Html from './html';
-import Property from './property';
-import Style from './style';
-import Text from './text';
+import AttrModifier from './attr';
+import CallModifier from './call';
+import ClassedModifier from './classed';
+import HtmlModifier from './html';
+import PropertyModifier from './property';
+import StyleModifier from './style';
+import TextModifier from './text';
 
 export default class Media {
   constructor(selection) {
-    this.selection = selection;
-    this.query = null;
-    this.matchers = {};
+    this._selection = selection;
+    this._query = null;
+    this._matchers = {};
   }
 
   media(query) {
-    this.query = query;
+    this._query = query;
     return this;
   }
 
   attr(name, value) {
-    this._attr().media(this.query).attr(name, value);
+    this._attr().media(this._query).attr(name, value);
     return this;
   }
 
   attrs(name, value) {
-    this._attr().media(this.query).attrs(name, value);
+    this._attr().media(this._query).attrs(name, value);
     return this;
   }
 
   call(...args) {
-    this._call().media(this.query).call(...args);
+    this._call().media(this._query).call(...args);
     return this;
   }
 
   classed(names, value) {
-    this._classed().media(this.query).classed(names, value);
+    this._classed().media(this._query).classed(names, value);
     return this;
   }
 
   html(value) {
-    this._html().media(this.query).html(value);
+    this._html().media(this._query).html(value);
     return this;
   }
 
   property(name, value) {
-    this._property().media(this.query).property(name, value);
+    this._property().media(this._query).property(name, value);
     return this;
   }
 
   properties(properties) {
-    this._property().media(this.query).properties(properties);
+    this._property().media(this._query).properties(properties);
     return this;
   }
 
   style(name, value) {
-    this._style().media(this.query).style(name, value);
+    this._style().media(this._query).style(name, value);
     return this;
   }
 
   styles(styles) {
-    this._style().media(this.query).styles(styles);
+    this._style().media(this._query).styles(styles);
     return this;
   }
 
   text(value) {
-    this._text().media(this.query).text(value);
+    this._text().media(this._query).text(value);
     return this;
   }
 
   start() {
-    Object.keys(this.matchers).forEach((key) => {
-      this.matchers[key].start();
-    });
+    Object.keys(this._matchers)
+      .forEach((key) => this._matchers[key].start());
 
     return this;
   }
 
   destroy() {
-    Object.keys(this.matchers).forEach((key) => {
-      this.matchers[key].destroy();
-    });
+    Object.keys(this._matchers)
+      .forEach((key) => this._matchers[key].destroy());
 
+    this._matchers = {};
     return this;
   }
 
   _attr() {
-    this.matchers.attr = this.matchers.attr || new Attr(this.selection);
-    return this.matchers.attr;
+    this._matchers.attr = this._matchers.attr ||
+      new AttrModifier(this._selection);
+    return this._matchers.attr;
   }
 
   _call() {
-    this.matchers.call = this.matchers.call || new Call(this.selection);
-    return this.matchers.call;
+    this._matchers.call = this._matchers.call ||
+      new CallModifier(this._selection);
+    return this._matchers.call;
   }
 
   _classed() {
-    this.matchers.classed = this.matchers.classed ||
-      new Classed(this.selection);
-    return this.matchers.classed;
+    this._matchers.classed = this._matchers.classed ||
+      new ClassedModifier(this._selection);
+    return this._matchers.classed;
   }
 
   _html() {
-    this.matchers.html = this.matchers.html || new Html(this.selection);
-    return this.matchers.html;
+    this._matchers.html = this._matchers.html ||
+      new HtmlModifier(this._selection);
+    return this._matchers.html;
   }
 
   _property() {
-    this.matchers.property = this.matchers.property ||
-      new Property(this.selection);
-    return this.matchers.property;
+    this._matchers.property = this._matchers.property ||
+      new PropertyModifier(this._selection);
+    return this._matchers.property;
   }
 
   _style() {
-    this.matchers.style = this.matchers.style || new Style(this.selection);
-    return this.matchers.style;
+    this._matchers.style = this._matchers.style ||
+      new StyleModifier(this._selection);
+    return this._matchers.style;
   }
 
   _text() {
-    this.matchers.text = this.matchers.text || new Text(this.selection);
-    return this.matchers.text;
+    this._matchers.text = this._matchers.text ||
+      new TextModifier(this._selection);
+    return this._matchers.text;
   }
 }

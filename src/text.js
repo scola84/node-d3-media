@@ -1,8 +1,8 @@
 /*eslint no-invalid-this: "off"*/
 
-import Abstract from './abstract-single';
+import AbstractSingleModifier from './abstract-single';
 
-export default class Text extends Abstract {
+export default class TextModifier extends AbstractSingleModifier {
   constructor(selection) {
     super(selection, 'text');
   }
