@@ -1,5 +1,3 @@
-import { bind, unbind } from '@scola/bind';
-
 export default class AbstractModifier {
   constructor(selection, method) {
     this._selection = selection;
@@ -7,6 +5,8 @@ export default class AbstractModifier {
 
     this._query = null;
     this._matchers = {};
+
+    this._handleChange = (q) => this._change(q);
   }
 
   media(query) {
@@ -15,14 +15,15 @@ export default class AbstractModifier {
     if (!this._matchers[query]) {
       this._matchers[query] = this._matchers[query] || {};
       this._matchers[query] = window.matchMedia(query);
-      this._bindMatcher(this._matchers[query], query);
+      this._bindMatcher(this._matchers[query]);
     }
 
     return this;
   }
 
   start() {
-    Object.keys(this._matchers).forEach((query) => this._change(query));
+    Object.keys(this._matchers)
+      .forEach((query) => this._change(this._matchers[query]));
   }
 
   destroy() {
@@ -30,11 +31,15 @@ export default class AbstractModifier {
       .forEach((query) => this._unbindMatcher(this._matchers[query]));
   }
 
-  _bindMatcher(matcher, query) {
-    bind(this, matcher, null, this._change, query);
+  _bindMatcher(matcher) {
+    matcher.addListener(this._handleChange);
   }
 
   _unbindMatcher(matcher) {
-    unbind(this, matcher, null, this._change);
+    matcher.removeListener(this._handleChange);
+  }
+
+  _change() {
+    throw new Error('Not implemented');
   }
 }

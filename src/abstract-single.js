@@ -17,10 +17,10 @@ export default class AbstractSingleModifier extends AbstractModifier {
     this._values[this._query] = value;
   }
 
-  _change(currentQuery) {
+  _change(current) {
     const method = this._method;
 
-    if (!this._matchers[currentQuery].matches) {
+    if (!this._matchers[current.media].matches) {
       const cache = this._cache;
       this._selection.each(function each() {
         select(this)[method](cache.get(this));

@@ -12,9 +12,9 @@ export default class CallModifier extends AbstractModifier {
     this._fns[this._query] = args;
   }
 
-  _change(query) {
-    if (this._matchers[query].matches) {
-      this._selection.call(...this._fns[query]);
+  _change(current) {
+    if (this._matchers[current.media].matches) {
+      this._selection.call(...this._fns[current.media]);
     }
   }
 }
