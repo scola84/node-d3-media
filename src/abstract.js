@@ -5,17 +5,15 @@ export default class AbstractModifier {
 
     this._query = null;
     this._matchers = {};
-
-    this._handleChange = (q) => this._change(q);
+    this._listeners = {};
   }
 
   media(query) {
     this._query = query;
 
     if (!this._matchers[query]) {
-      this._matchers[query] = this._matchers[query] || {};
       this._matchers[query] = window.matchMedia(query);
-      this._bindMatcher(this._matchers[query]);
+      this._bindMatcher(query);
     }
 
     return this;
@@ -23,20 +21,22 @@ export default class AbstractModifier {
 
   start() {
     Object.keys(this._matchers)
-      .forEach((query) => this._change(this._matchers[query]));
+      .forEach((query) => this._change(query));
   }
 
   destroy() {
     Object.keys(this._matchers)
-      .forEach((query) => this._unbindMatcher(this._matchers[query]));
+      .forEach((query) => this._unbindMatcher(query));
   }
 
-  _bindMatcher(matcher) {
-    matcher.addListener(this._handleChange);
+  _bindMatcher(query) {
+    this._listeners[query] = this._change.bind(this, query);
+    this._matchers[query].addListener(this._listeners[query]);
   }
 
-  _unbindMatcher(matcher) {
-    matcher.removeListener(this._handleChange);
+  _unbindMatcher(query) {
+    this._matchers[query].addListener(this._listeners[query]);
+    delete this._listeners[query];
   }
 
   _change() {

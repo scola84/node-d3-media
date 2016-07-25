@@ -20,7 +20,7 @@ export default class AbstractSingleModifier extends AbstractModifier {
   _change(current) {
     const method = this._method;
 
-    if (!this._matchers[current.media].matches) {
+    if (!this._matchers[current].matches) {
       const cache = this._cache;
       this._selection.each(function each() {
         select(this)[method](cache.get(this));

@@ -13,8 +13,8 @@ export default class CallModifier extends AbstractModifier {
   }
 
   _change(current) {
-    if (this._matchers[current.media].matches) {
-      this._selection.call(...this._fns[current.media]);
+    if (this._matchers[current].matches) {
+      this._selection.call(...this._fns[current]);
     }
   }
 }

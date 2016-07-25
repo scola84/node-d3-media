@@ -22,8 +22,8 @@ export default class AbstractPairModifier extends AbstractModifier {
   _change(current) {
     const method = this._method;
 
-    if (!this._matchers[current.media].matches) {
-      Object.keys(this._values[current.media]).forEach((name) => {
+    if (!this._matchers[current].matches) {
+      Object.keys(this._values[current]).forEach((name) => {
         const cache = this._cache[name];
         this._selection.each(function each() {
           select(this)[method](name, cache.get(this));
