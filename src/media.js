@@ -50,8 +50,8 @@ export default class Media {
     return this;
   }
 
-  properties(properties) {
-    this._property().media(this._query).properties(properties);
+  properties(value) {
+    this._property().media(this._query).properties(value);
     return this;
   }
 
@@ -60,8 +60,8 @@ export default class Media {
     return this;
   }
 
-  styles(styles) {
-    this._style().media(this._query).styles(styles);
+  styles(value) {
+    this._style().media(this._query).styles(value);
     return this;
   }
 

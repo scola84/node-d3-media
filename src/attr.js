@@ -9,9 +9,9 @@ export default class Attr extends AbstractPairModifier {
     this._set(name, value);
   }
 
-  attrs(attrs) {
-    Object.keys(attrs).forEach((name) => {
-      this._set(name, attrs[name]);
+  attrs(value) {
+    Object.keys(value).forEach((name) => {
+      this._set(name, value[name]);
     });
   }
 }

@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import buble from 'rollup-plugin-buble';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
@@ -13,8 +13,6 @@ export default {
       jsnext: true,
       skip: ['d3-selection']
     }),
-    babel({
-      presets: ['es2015-rollup']
-    })
+    buble()
   ]
 };

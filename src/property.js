@@ -9,9 +9,9 @@ export default class PropertyModifier extends AbstractPairModifier {
     this._set(name, value);
   }
 
-  properties(properties) {
-    Object.keys(properties).forEach((name) => {
-      this._set(name, properties[name]);
+  properties(value) {
+    Object.keys(value).forEach((name) => {
+      this._set(name, value[name]);
     });
   }
 }

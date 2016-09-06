@@ -12,9 +12,9 @@ export default class StyleModifier extends AbstractPairModifier {
     this._set(name, value);
   }
 
-  styles(styles) {
-    Object.keys(styles).forEach((name) => {
-      this._set(name, styles[name]);
+  styles(value) {
+    Object.keys(value).forEach((name) => {
+      this._set(name, value[name]);
     });
   }
 
