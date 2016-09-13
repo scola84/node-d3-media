@@ -5,8 +5,7 @@ export default {
   entry: 'index.js',
   format: 'umd',
   globals: {
-    'd3-selection': 'd3',
-    '@scola/bind': 'bind'
+    'd3-selection': 'd3'
   },
   plugins: [
     resolve({
