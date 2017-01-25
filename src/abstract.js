@@ -1,11 +1,15 @@
 export default class AbstractModifier {
-  constructor(selection, method) {
-    this._selection = selection;
-    this._method = method;
-
+  constructor() {
+    this._selection = null;
+    this._method = null;
     this._query = null;
     this._matchers = {};
     this._listeners = {};
+  }
+
+  selection(value) {
+    this._selection = value;
+    return this;
   }
 
   media(query) {

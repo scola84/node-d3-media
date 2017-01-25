@@ -1,8 +1,9 @@
 import AbstractPairModifier from './abstract-pair';
 
 export default class ClassedModifier extends AbstractPairModifier {
-  constructor(selection) {
-    super(selection, 'classed');
+  constructor() {
+    super();
+    this._method = 'classed';
   }
 
   classed(names, value) {

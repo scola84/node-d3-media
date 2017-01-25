@@ -10,77 +10,114 @@ import TextModifier from './text';
 import 'd3-selection-multi';
 
 export default class Media {
-  constructor(selection) {
-    this._selection = selection;
+  constructor() {
+    this._selection = null;
     this._query = null;
     this._matchers = {};
   }
 
-  media(query) {
-    this._query = query;
+  selection(value) {
+    this._selection = value;
+    return this;
+  }
+
+  media(value) {
+    this._query = value;
     return this;
   }
 
   attr(name, value) {
-    this._attr().media(this._query).attr(name, value);
+    this._attr()
+      .media(this._query)
+      .attr(name, value);
+
     return this;
   }
 
   attrs(name, value) {
-    this._attr().media(this._query).attrs(name, value);
+    this._attr()
+      .media(this._query)
+      .attrs(name, value);
+
     return this;
   }
 
   call(...args) {
-    this._call().media(this._query).call(...args);
+    this._call()
+      .media(this._query)
+      .call(...args);
+
     return this;
   }
 
   classed(names, value) {
-    this._classed().media(this._query).classed(names, value);
+    this._classed()
+      .media(this._query)
+      .classed(names, value);
+
     return this;
   }
 
   html(value) {
-    this._html().media(this._query).html(value);
+    this._html()
+      .media(this._query)
+      .html(value);
+
     return this;
   }
 
   property(name, value) {
-    this._property().media(this._query).property(name, value);
+    this._property()
+      .media(this._query)
+      .property(name, value);
+
     return this;
   }
 
   properties(value) {
-    this._property().media(this._query).properties(value);
+    this._property()
+      .media(this._query)
+      .properties(value);
+
     return this;
   }
 
   style(name, value) {
-    this._style().media(this._query).style(name, value);
+    this._style()
+      .media(this._query)
+      .style(name, value);
+
     return this;
   }
 
   styles(value) {
-    this._style().media(this._query).styles(value);
+    this._style()
+      .media(this._query)
+      .styles(value);
+
     return this;
   }
 
   text(value) {
-    this._text().media(this._query).text(value);
+    this._text()
+      .media(this._query)
+      .text(value);
+
     return this;
   }
 
   start() {
-    Object.keys(this._matchers)
-      .forEach((key) => this._matchers[key].start());
+    Object.keys(this._matchers).forEach((key) => {
+      return this._matchers[key].start();
+    });
 
     return this;
   }
 
   destroy() {
-    Object.keys(this._matchers)
-      .forEach((key) => this._matchers[key].destroy());
+    Object.keys(this._matchers).forEach((key) => {
+      this._matchers[key].destroy();
+    });
 
     this._matchers = {};
     return this;
@@ -88,43 +125,50 @@ export default class Media {
 
   _attr() {
     this._matchers.attr = this._matchers.attr ||
-      new AttrModifier(this._selection);
+      new AttrModifier().selection(this._selection);
+
     return this._matchers.attr;
   }
 
   _call() {
     this._matchers.call = this._matchers.call ||
-      new CallModifier(this._selection);
+      new CallModifier().selection(this._selection);
+
     return this._matchers.call;
   }
 
   _classed() {
     this._matchers.classed = this._matchers.classed ||
-      new ClassedModifier(this._selection);
+      new ClassedModifier().selection(this._selection);
+
     return this._matchers.classed;
   }
 
   _html() {
     this._matchers.html = this._matchers.html ||
-      new HtmlModifier(this._selection);
+      new HtmlModifier().selection(this._selection);
+
     return this._matchers.html;
   }
 
   _property() {
     this._matchers.property = this._matchers.property ||
-      new PropertyModifier(this._selection);
+      new PropertyModifier().selection(this._selection);
+
     return this._matchers.property;
   }
 
   _style() {
     this._matchers.style = this._matchers.style ||
-      new StyleModifier(this._selection);
+      new StyleModifier().selection(this._selection);
+
     return this._matchers.style;
   }
 
   _text() {
     this._matchers.text = this._matchers.text ||
-      new TextModifier(this._selection);
+      new TextModifier().selection(this._selection);
+
     return this._matchers.text;
   }
 }

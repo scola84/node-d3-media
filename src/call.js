@@ -3,8 +3,8 @@
 import AbstractModifier from './abstract';
 
 export default class CallModifier extends AbstractModifier {
-  constructor(selection) {
-    super(selection);
+  constructor() {
+    super();
     this._fns = {};
   }
 

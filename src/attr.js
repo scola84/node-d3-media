@@ -1,8 +1,9 @@
 import AbstractPairModifier from './abstract-pair';
 
 export default class Attr extends AbstractPairModifier {
-  constructor(selection) {
-    super(selection, 'attr');
+  constructor() {
+    super();
+    this._method = 'attr';
   }
 
   attr(name, value) {

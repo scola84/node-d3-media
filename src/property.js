@@ -1,8 +1,9 @@
 import AbstractPairModifier from './abstract-pair';
 
 export default class PropertyModifier extends AbstractPairModifier {
-  constructor(selection) {
-    super(selection, 'property');
+  constructor() {
+    super();
+    this._method = 'property';
   }
 
   property(name, value) {

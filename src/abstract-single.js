@@ -4,8 +4,8 @@ import { local, select } from 'd3-selection';
 import AbstractModifier from './abstract';
 
 export default class AbstractSingleModifier extends AbstractModifier {
-  constructor(selection, method) {
-    super(selection, method);
+  constructor() {
+    super();
 
     this._values = {};
     this._cache = local();

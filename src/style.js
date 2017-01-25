@@ -4,8 +4,9 @@ import { local } from 'd3-selection';
 import AbstractPairModifier from './abstract-pair';
 
 export default class StyleModifier extends AbstractPairModifier {
-  constructor(selection) {
-    super(selection, 'style');
+  constructor() {
+    super();
+    this._method = 'style';
   }
 
   style(name, value) {

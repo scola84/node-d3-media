@@ -1,8 +1,9 @@
 import AbstractSingleModifier from './abstract-single';
 
 export default class HtmlModifier extends AbstractSingleModifier {
-  constructor(selection) {
-    super(selection, 'html');
+  constructor() {
+    super();
+    this._method = 'html';
   }
 
   html(value) {

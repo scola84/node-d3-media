@@ -1,8 +1,9 @@
 import AbstractSingleModifier from './abstract-single';
 
 export default class TextModifier extends AbstractSingleModifier {
-  constructor(selection) {
-    super(selection, 'text');
+  constructor() {
+    super();
+    this._method = 'text';
   }
 
   text(value) {
