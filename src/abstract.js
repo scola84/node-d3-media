@@ -39,7 +39,7 @@ export default class AbstractModifier {
   }
 
   _unbindMatcher(query) {
-    this._matchers[query].addListener(this._listeners[query]);
+    this._matchers[query].removeListener(this._listeners[query]);
     delete this._listeners[query];
   }
 
