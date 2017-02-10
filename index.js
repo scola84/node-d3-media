@@ -1,4 +1,4 @@
-import { selection } from 'd3-selection';
+import { selection } from 'd3';
 import Media from './src/media';
 
 selection.prototype.media = function media(query) {

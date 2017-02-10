@@ -1,6 +1,6 @@
 /*eslint no-invalid-this: "off"*/
 
-import { local, select } from 'd3-selection';
+import { local, select } from 'd3';
 import AbstractModifier from './abstract';
 
 export default class AbstractPairModifier extends AbstractModifier {

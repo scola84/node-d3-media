@@ -7,7 +7,6 @@ import HtmlModifier from './html';
 import PropertyModifier from './property';
 import StyleModifier from './style';
 import TextModifier from './text';
-import 'd3-selection-multi';
 
 export default class Media {
   constructor() {

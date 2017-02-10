@@ -1,6 +1,6 @@
 /*eslint no-invalid-this: "off"*/
 
-import { local } from 'd3-selection';
+import { local } from 'd3';
 import AbstractPairModifier from './abstract-pair';
 
 export default class StyleModifier extends AbstractPairModifier {
