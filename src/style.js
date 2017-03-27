@@ -20,7 +20,7 @@ export default class StyleModifier extends AbstractPairModifier {
   }
 
   _save(name) {
-    if (this._cache[name]) {
+    if (typeof this._cache[name] !== 'undefined') {
       return;
     }
 

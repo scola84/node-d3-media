@@ -22,7 +22,7 @@ export default class AbstractPairModifier extends AbstractModifier {
   _change(current) {
     const method = this._method;
 
-    if (!this._matchers[current].matches) {
+    if (this._matchers[current].matches === false) {
       Object.keys(this._values[current]).forEach((name) => {
         const cache = this._cache[name];
         this._selection.each(function each() {
@@ -32,7 +32,7 @@ export default class AbstractPairModifier extends AbstractModifier {
     }
 
     Object.keys(this._matchers).forEach((query) => {
-      if (!this._matchers[query].matches) {
+      if (this._matchers[query].matches === false) {
         return;
       }
 
@@ -45,7 +45,7 @@ export default class AbstractPairModifier extends AbstractModifier {
   }
 
   _save(name) {
-    if (this._cache[name]) {
+    if (typeof this._cache[name] !== 'undefined') {
       return;
     }
 

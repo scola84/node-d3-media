@@ -20,7 +20,7 @@ export default class AbstractSingleModifier extends AbstractModifier {
   _change(current) {
     const method = this._method;
 
-    if (!this._matchers[current].matches) {
+    if (this._matchers[current].matches === false) {
       const cache = this._cache;
       this._selection.each(function each() {
         select(this)[method](cache.get(this));
@@ -28,7 +28,7 @@ export default class AbstractSingleModifier extends AbstractModifier {
     }
 
     Object.keys(this._matchers).forEach((query) => {
-      if (this._matchers[query].matches) {
+      if (this._matchers[query].matches === true) {
         this._selection[method](this._values[query]);
       }
     });

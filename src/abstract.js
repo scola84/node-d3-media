@@ -15,7 +15,7 @@ export default class AbstractModifier {
   media(query) {
     this._query = query;
 
-    if (!this._matchers[query]) {
+    if (typeof this._matchers[query] === 'undefined') {
       this._matchers[query] = window.matchMedia(query);
       this._bindMatcher(query);
     }
