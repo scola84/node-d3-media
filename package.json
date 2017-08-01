@@ -1,6 +1,6 @@
 {
   "name": "@scola/d3-media",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Media Query",
   "repository": "github:scola84/node-d3-media",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
